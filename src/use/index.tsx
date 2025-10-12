@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react";
+import { startTransition, Suspense, useState } from "react";
 import { useNavigate } from "react-router";
 import { ROUTE_PATH } from "../routes/routePath";
 import Header from "./Header";
@@ -9,6 +9,13 @@ function UsePage() {
   console.log("UsePage 리렌더링!");
   const navigate = useNavigate();
   const [count, setCount] = useState(0);
+  const [transitionCount, setTransitionCount] = useState(0);
+
+  function handleTransitionUpdate() {
+    startTransition(() => {
+      setTransitionCount((c) => c + 1);
+    });
+  }
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -18,6 +25,9 @@ function UsePage() {
       <button onClick={() => setCount((prev) => prev + 1)}>
         카운트 증가: {count}
       </button>
+      <button onClick={handleTransitionUpdate}>
+        startTransition 업데이트: {transitionCount}
+      </button>
       <Header />
       <UseComponent promiseData={api.get()} />
     </Suspense>
@@ -25,3 +35,5 @@ function UsePage() {
 }
 
 export default UsePage;
+
+// 이건 다른 궁금증인데, 이런 리렌더링이 일어나도 이런 리렌더링은 컴포넌트 하이라이트가 안잡히네. 프로파일도 안됨 ㅋㅋ
