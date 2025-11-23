@@ -1,8 +1,8 @@
 import { use } from "react";
 
 function UseComponent({ promiseData }: { promiseData: Promise<string> }) {
+  console.log("UseComponent 리렌더링! use() 호출 전");
   const data = use(promiseData);
-  console.log("UseComponent rendered");
 
   return (
     <div>

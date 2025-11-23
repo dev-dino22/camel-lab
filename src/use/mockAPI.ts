@@ -1,6 +1,6 @@
 export const api = {
   get: async () => {
-    console.log("get함수 시작");
+    console.log("api 요청 발생!");
     const data = await timeout();
     return data;
   },
@@ -12,6 +12,6 @@ function timeout(): Promise<string> {
     setTimeout(() => {
       console.log("timeout set시작");
       resolve("Mock API Data");
-    }, 1000);
+    }, 400);
   });
 }

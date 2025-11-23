@@ -1,34 +1,29 @@
 import { startTransition, Suspense, useState } from "react";
-import { useNavigate } from "react-router";
-import { ROUTE_PATH } from "../routes/routePath";
-import Header from "./Header";
 import UseComponent from "./UseComponent";
 import { api } from "./mockAPI";
+import UseComponent2 from "./UseComponent2";
 
 function UsePage() {
-  console.log("UsePage 리렌더링!");
-  const navigate = useNavigate();
   const [count, setCount] = useState(0);
-  const [transitionCount, setTransitionCount] = useState(0);
+  // const [transitionCount, setTransitionCount] = useState(0);
 
-  function handleTransitionUpdate() {
-    startTransition(() => {
-      setTransitionCount((c) => c + 1);
-    });
+  // function updateTransitionState() {
+  //   startTransition(() => {
+  //     setTransitionCount((c) => c + 1);
+  //   });
+  // }
+
+  function updateState() {
+    setCount((c) => c + 1);
   }
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <button onClick={() => navigate(ROUTE_PATH.USE)}>
-        여기 페이지로 다시 이동
-      </button>
-      <button onClick={() => setCount((prev) => prev + 1)}>
-        카운트 증가: {count}
-      </button>
-      <button onClick={handleTransitionUpdate}>
+      <button onClick={updateState}>state 업데이트: {count}</button>
+      {/* <button onClick={updateTransitionState}>
         startTransition 업데이트: {transitionCount}
-      </button>
-      <Header />
+      </button> */}
+
       <UseComponent promiseData={api.get()} />
     </Suspense>
   );
